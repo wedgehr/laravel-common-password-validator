@@ -5,7 +5,7 @@ namespace Wedge\Validators\CommonPassword;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
-class Service
+class CommonPassword
 {
     private array $seedQueue = [];
     private array $config = [];
@@ -65,6 +65,7 @@ class Service
         }
 
         fclose($fh);
+        unlink($path);
     }
 
     /**
@@ -95,7 +96,7 @@ class Service
         $values = array_map(fn ($p) => [
             'id'       => hash('sha256', $p),
             'password' => $p
-        ], $this->seedQueue);
+        ], array_unique($this->seedQueue));
 
         DB::table($this->config['table'])
             ->upsert($values, 'id');

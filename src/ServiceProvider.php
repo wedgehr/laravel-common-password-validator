@@ -14,12 +14,12 @@ class ServiceProvider extends IlluminateServiceProvider
     /**
      * Publishes all the config file this package needs to function.
      */
-    public function boot(Service $service)
+    public function boot(CommonPassword $service)
     {
         $this->offerPublishing();
         $this->registerCommands();
 
-        $this->app->bind(Service::class, function ($app) use ($service) {
+        $this->app->bind(CommonPassword::class, function ($app) use ($service) {
             return $service;
         });
 

@@ -13,6 +13,6 @@ class Facade extends IlluminateFacade
      */
     protected static function getFacadeAccessor()
     {
-        return Service::class;
+        return CommonPassword::class;
     }
 }
