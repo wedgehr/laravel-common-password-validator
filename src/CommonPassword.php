@@ -55,13 +55,8 @@ class CommonPassword
 
         while (($buffer = fgets($fh, 128)) !== false) {
             if (!$this->importPassword($buffer)) {
-                return;
+                break;
             }
-        }
-
-        if (!feof($fh)) {
-            fclose($fh);
-            throw new \Exception('failed to read from file at path: ' . $path);
         }
 
         fclose($fh);
