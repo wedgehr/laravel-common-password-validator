@@ -16,9 +16,10 @@ return [
 
     /**
      * Maximum number of common passwords to store
+     * Set to 0 to disable limit
      * @var int
      */
-    'count' => 10000,
+    'limit' => 10000,
 
     /**
      * A list of urls of common password text files which we need to fetch and load
@@ -37,4 +38,11 @@ return [
         'https://raw.githubusercontent.com/danielmiessler/SecLists/5e1dc9cc79aac54b373349e2a97bbb22f1b63bb3/Passwords/Common-Credentials/10-million-password-list-top-100000.txt',
 
     ],
+
+    /**
+     * A validation message for uncommon passwords
+     *
+     * @var string
+     */
+    'message' => 'Your password is too guessable. Please try another!',
 ];

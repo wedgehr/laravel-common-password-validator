@@ -3,21 +3,13 @@
 namespace Wedge\Validators\CommonPassword;
 
 use Illuminate\Support\Collection;
-use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
 
 class ServiceProvider extends IlluminateServiceProvider
 {
     protected $defer = false;
-
-    /**
-     * Default error message.
-     *
-     * @var string
-     */
-    protected $message = 'Your password is too guessable. Please try another!';
 
     /**
      * Publishes all the config file this package needs to function.
@@ -31,17 +23,9 @@ class ServiceProvider extends IlluminateServiceProvider
             return $service;
         });
 
-        // Validator::extend('commonpwd', function ($attribute, $value, $parameters, $validator) {
-        //     $path = realpath(__DIR__ . '/../resources/config/passwordlist.txt');
-        //     $cache_key = md5_file($path);
-        //     $data = Cache::rememberForever('dumbpwd_list_' . $cache_key, function () use ($path) {
-        //         return collect(explode("\n", file_get_contents($path)))
-        //             ->map(function ($password) {
-        //                 return strtolower($password);
-        //             });
-        //     });
-        //     return !$data->contains(strtolower($value));
-        // }, $this->message);
+        Validator::extend('common_pwd', function ($attribute, $value, $parameters, $validator) use ($service) {
+            return !$service->isCommonPassword($value);
+        }, $this->app['config']['common-passwords.message']);
     }
 
     /**
